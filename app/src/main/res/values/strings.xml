@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">ServiceExam</string>
+    <string name="loading">Loading...</string>
+    <string name="logo">Logo</string>
+
+    <!-- Clave de servidor para autenticacion -->
+    <string name="server_key_sign_in">464573287033-idg96drbfqpqdkm9pnfhd7ltl725s6qp.apps.googleusercontent.com</string>
+
+    <!-- Clave de servidor para reCaptcha -->
+    <string name="my_site_key">6Le7aOsUAAAAAPkIFIhtR6hUZSBxBvbTsHbs1UmJ</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="list_public_repositories">List public repositories</string>
+    <string name="avatar">avatar</string>
+    <string name="descripcion">Descripcion:</string>
+</resources>

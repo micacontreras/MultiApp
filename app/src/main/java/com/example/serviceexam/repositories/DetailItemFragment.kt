@@ -32,15 +32,17 @@ class DetailItemFragment : Fragment() {
     }
 
     private fun obteinUser() {
-       /* parentFragmentManager.setFragmentResultListener("Data", this,
+       parentFragmentManager.setFragmentResultListener("Data", this,
             FragmentResultListener { _, bundle ->
                 bundle.getParcelable<Properties>("DataUser").also {
                     modifyScreen(it)
                 }
-            })*/
-        setResultListener("Data"){ _, bundle ->
-            modifyScreen(bundle.getParcelable("DataUser"))
-        }
+            })
+        //Terminar de probar!!
+
+        /*setResultListener("Data"){ _, bundle ->
+            modifyScreen(bundle.getBundle("DataSend")?.getParcelable("DataUser"))
+        }*/
     }
 
     private fun modifyScreen(data: Properties?) {

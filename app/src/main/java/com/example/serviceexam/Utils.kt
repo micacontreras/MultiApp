@@ -22,7 +22,7 @@ fun Fragment.setResultListener(requestKey: String, action: (key: String, bundle:
     return Bundle().also {
         parentFragmentManager.setFragmentResultListener(requestKey, this,
             FragmentResultListener { key, bundle ->
-                it
+                it.putBundle("DataSend", bundle)
             })
     }
 }

@@ -9,8 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentResultListener
-import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import com.example.serviceexam.R
 import com.example.serviceexam.showDialog
@@ -29,10 +27,10 @@ import kotlinx.android.synthetic.main.fragment_login.*
 /**
  * A simple [Fragment] subclass.
  */
+@Suppress("DEPRECATION")
 class LoginFragment : Fragment() {
 
     private var mGoogleSignInClient: GoogleSignInClient? = null
-    private val RC_SIGN_IN = 9001
     private var myReCaptchaClient: SafetyNetClient? = null
 
     override fun onCreateView(
@@ -45,7 +43,7 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        SignInWithGoogle()
+        signInWithGoogle()
         createClientToReCaptcha()
     }
 
@@ -79,7 +77,7 @@ class LoginFragment : Fragment() {
             }
     }
 
-    private fun SignInWithGoogle() {
+    private fun signInWithGoogle() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.server_key_sign_in))
             .requestEmail()
@@ -113,7 +111,7 @@ class LoginFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode ==RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
         }
@@ -126,5 +124,9 @@ class LoginFragment : Fragment() {
             Log.e("failed code=", e.statusCode.toString())
             showDialog(requireContext(), "Error", e.statusCode.toString(), "Ok")
         }
+    }
+
+    companion object {
+        private const val RC_SIGN_IN = 9001
     }
 }

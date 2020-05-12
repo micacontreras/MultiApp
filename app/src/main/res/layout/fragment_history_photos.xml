@@ -7,13 +7,13 @@
     tools:context=".repositories.ListRepositoriesFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/listPhotos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/list_public_repositories"
+        android:text="@string/list_photos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,35 +21,8 @@
         android:textAlignment="center"
         android:textSize="20sp"/>
 
-    <Button
-        android:id="@+id/takePhoto"
-        style="@android:style/Widget.Holo.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="102dp"
-        android:drawableStart="@android:drawable/ic_menu_camera"
-        android:text="@string/take_photo"
-        app:layout_constraintEnd_toStartOf="@+id/history"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <Button
-        android:id="@+id/history"
-        style="@android:style/Widget.Holo.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:drawableStart="@android:drawable/ic_menu_recent_history"
-        android:text="@string/history"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/takePhoto"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
     <ProgressBar
-        android:id="@+id/loading"
+        android:id="@+id/loadingPhoto"
         android:layout_width="100sp"
         android:layout_height="100sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,18 +31,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="613dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="32dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/takePhoto">
+        app:layout_constraintTop_toBottomOf="@+id/listPhotos">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="wrap_content"
+            android:id="@+id/recyclerViewHistory"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"

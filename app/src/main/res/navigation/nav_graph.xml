@@ -22,10 +22,57 @@
         <action
             android:id="@+id/navigateToDetailItem"
             app:destination="@id/detailItemFragment" />
+        <action
+            android:id="@+id/navigateToPermissions"
+            app:destination="@id/permissionsFragments" />
+        <action
+            android:id="@+id/navigateToHistory"
+            app:destination="@id/historyPhotosFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailItemFragment"
         android:name="com.example.serviceexam.repositories.DetailItemFragment"
         android:label="fragment_detail_item"
         tools:layout="@layout/fragment_detail_item" />
+    <fragment
+        android:id="@+id/permissionsFragments"
+        android:name="com.example.serviceexam.camera.PermissionsFragments"
+        android:label="PermissionsFragments" >
+        <action
+            android:id="@+id/navigateToCamera"
+            app:destination="@id/cameraFragment"
+            app:popUpTo="@id/listRepositoriesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.example.serviceexam.camera.CameraFragment"
+        android:label="CameraFragment" >
+        <action
+            android:id="@+id/navigateToGallery"
+            app:destination="@id/galleryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.example.serviceexam.camera.GalleryFragment"
+        android:label="fragment_gallery"
+        tools:layout="@layout/fragment_gallery" >
+        <argument
+            android:name="root_directory"
+            android:defaultValue="null"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyPhotosFragment"
+        android:name="com.example.serviceexam.history.photos.HistoryPhotosFragment"
+        android:label="fragment_history_photos"
+        tools:layout="@layout/fragment_history_photos" >
+        <action
+            android:id="@+id/navigateToDetailPhoto"
+            app:destination="@id/detailPhotoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailPhotoFragment"
+        android:name="com.example.serviceexam.history.photos.DetailPhotoFragment"
+        android:label="fragment_detail_photo"
+        tools:layout="@layout/fragment_detail_photo" />
 </navigation>

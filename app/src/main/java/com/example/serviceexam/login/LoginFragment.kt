@@ -2,6 +2,7 @@ package com.example.serviceexam.login
 
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import com.example.serviceexam.R
 import com.example.serviceexam.showDialog
@@ -47,34 +49,19 @@ class LoginFragment : Fragment() {
         createClientToReCaptcha()
     }
 
-    private fun createClientToReCaptcha() {
-        myReCaptchaClient = SafetyNet.getClient(requireActivity())
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         signInButton.setOnClickListener { signIn() }
         reCaptchaButton.setOnClickListener { validateCaptcha() }
     }
 
-    private fun validateCaptcha() {
-        SafetyNet.getClient(requireActivity()).verifyWithRecaptcha(getString(R.string.my_site_key))
-            .addOnSuccessListener(requireActivity()) { response ->
-                val userResponseToken = response.tokenResult
-                if (!userResponseToken.isNullOrEmpty()) {
-                    // Validate the user response token using the reCAPTCHA siteverify API.
-                    //No aplicable la verificacion con backend
-                    findNavController().navigate(LoginFragmentDirections.navigateToListRepositories())
-                }
-            }
-            .addOnFailureListener(requireActivity()) { e ->
-                if (e is ApiException) {
-                    Log.d(TAG, "Error: ${CommonStatusCodes.getStatusCodeString(e.statusCode)}")
-                } else {
-                    Log.d(TAG, "Error: ${e.message}")
-                }
-                showDialog(requireActivity(), "Error", e.message.toString(), "Ok")
-            }
+    override fun onStart() {
+        super.onStart()
+        val account = GoogleSignIn.getLastSignedInAccount(activity)
+
+        if (account != null) {
+            checkCredentials()
+        }
     }
 
     private fun signInWithGoogle() {
@@ -86,23 +73,6 @@ class LoginFragment : Fragment() {
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
     }
 
-    override fun onStart() {
-        super.onStart()
-        val account = GoogleSignIn.getLastSignedInAccount(activity)
-
-        if (account != null) {
-            signInButton.isEnabled = false
-            reCaptchaButton.visibility = View.VISIBLE
-            reCaptchaButton.isChecked =false
-            showDialog(
-                requireContext(),
-                "",
-                "Se ha registrado exitosamente. Por favor verifique que es humano para continuar.",
-                "Ok"
-            )
-        }
-    }
-
     private fun signIn() {
         val signInIntent = mGoogleSignInClient?.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
@@ -111,7 +81,7 @@ class LoginFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode ==RC_SIGN_IN) {
+        if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
         }
@@ -119,11 +89,54 @@ class LoginFragment : Fragment() {
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
+            saveUser(completedTask.result?.givenName)
             reCaptchaButton.visibility = View.VISIBLE
         } catch (e: ApiException) {
             Log.e("failed code=", e.statusCode.toString())
             showDialog(requireContext(), "Error", e.statusCode.toString(), "Ok")
         }
+    }
+
+    private fun checkCredentials() {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val userSaved = sharedPref.getString(getString(R.string.name), null)
+        if (!userSaved.isNullOrEmpty()) {
+            findNavController().navigate(LoginFragmentDirections.navigateToListRepositories())
+        }
+    }
+
+    private fun saveUser(name: String?) {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        with(sharedPref.edit()) {
+            putString(getString(R.string.name), name)
+            apply()
+        }
+    }
+
+    private fun createClientToReCaptcha() {
+        myReCaptchaClient = SafetyNet.getClient(requireActivity())
+    }
+
+    private fun validateCaptcha() {
+        SafetyNet.getClient(requireActivity()).verifyWithRecaptcha(getString(R.string.my_site_key))
+            .addOnSuccessListener(requireActivity()) { response ->
+                val userResponseToken = response.tokenResult
+                if (!userResponseToken.isNullOrEmpty()) {
+                    // Validate the user response token using the reCAPTCHA siteverify API.
+                    //No aplicable la verificacion con backend
+                    Bundle().apply { putString("Hola", "HolaPrueba") }
+                        .also { setFragmentResult("Hola", it) }
+                    findNavController().navigate(LoginFragmentDirections.navigateToListRepositories())
+                }
+            }
+            .addOnFailureListener(requireActivity()) { e ->
+                if (e is ApiException) {
+                    Log.d(TAG, "Error: ${CommonStatusCodes.getStatusCodeString(e.statusCode)}")
+                } else {
+                    Log.d(TAG, "Error: ${e.message}")
+                }
+                showDialog(requireActivity(), "Error", e.message.toString(), "Ok")
+            }
     }
 
     companion object {

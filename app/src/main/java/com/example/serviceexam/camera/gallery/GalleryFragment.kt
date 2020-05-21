@@ -1,24 +1,21 @@
-package com.example.serviceexam.camera
+package com.example.serviceexam.camera.gallery
 
 import android.content.Intent
-import android.media.MediaScannerConnection
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
-import android.widget.ImageButton
-import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.viewpager.widget.ViewPager
 import com.example.serviceexam.*
+import com.example.serviceexam.camera.gallery.GalleryFragmentArgs
+import kotlinx.android.synthetic.main.fragment_gallery.view.*
 import java.io.File
 import java.util.*
 
@@ -40,16 +37,17 @@ class GalleryFragment internal constructor() : Fragment() {
     inner class MediaPagerAdapter(fm: FragmentManager) :
         FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         override fun getCount(): Int = mediaList.size
-        override fun getItem(position: Int): Fragment = PhotoFragment.create(mediaList[position])
+        override fun getItem(position: Int): Fragment =
+            PhotoFragment.create(
+                mediaList[position]
+            )
         override fun getItemPosition(obj: Any): Int = POSITION_NONE
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         // Mark this as a retain fragment, so the lifecycle does not get restarted on config change
         retainInstance = true
-
         // Get root directory of media from navigation arguments
         val rootDirectory = File(args.rootDirectory)
         mediaList = rootDirectory.listFiles { file ->
@@ -68,20 +66,20 @@ class GalleryFragment internal constructor() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (mediaList.isEmpty()) {
-            view.findViewById<ImageButton>(R.id.delete_button).isEnabled = false
-            view.findViewById<ImageButton>(R.id.share_button).isEnabled = false
+            view.delete_button.isEnabled = false
+            view.share_button.isEnabled = false
         }
-        val mediaViewPager = view.findViewById<ViewPager>(R.id.photo_view_pager).apply {
+        val mediaViewPager = view.photo_view_pager.apply {
             offscreenPageLimit = 2
             adapter = MediaPagerAdapter(childFragmentManager)
         }
 
-        view.findViewById<ImageButton>(R.id.back_button).setOnClickListener {
+        view.back_button.setOnClickListener {
             findNavController().navigateUp()
         }
 
         // Handle share button press
-        view.findViewById<ImageButton>(R.id.share_button).setOnClickListener {
+        view.share_button.setOnClickListener {
 
             mediaList.getOrNull(mediaViewPager.currentItem)?.let { mediaFile ->
                 val intent = Intent().apply {
@@ -101,7 +99,7 @@ class GalleryFragment internal constructor() : Fragment() {
         }
 
         // Handle delete button press
-        view.findViewById<ImageButton>(R.id.delete_button).setOnClickListener {
+        view.delete_button.setOnClickListener {
 
             mediaList.getOrNull(mediaViewPager.currentItem)?.let { mediaFile ->
                 showDialog(requireContext(), "Confirm", "Do you want to delete the current photo?",
@@ -109,7 +107,12 @@ class GalleryFragment internal constructor() : Fragment() {
                         mediaFile.delete()
                         mediaList.removeAt(mediaViewPager.currentItem)
                         mediaViewPager.adapter?.notifyDataSetChanged()
-
+                        //Delete the photo from the DB
+                        Bundle().apply {
+                            putString(EXTRA_REPLY_URI_PHOT, mediaFile.absolutePath)
+                        }.also {
+                            setFragmentResult("ResultToDelete", it)
+                        }
                         // If all photos have been deleted, return to camera
                         if (mediaList.isEmpty()) {
                             findNavController().navigateUp()

@@ -11,6 +11,8 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentResultListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 
 fun showDialog(context: Context, title: String, message: String, positiveButton: String,  positiveAction: (() -> Unit)? = null, negativeButton:String?= null ){
     AlertDialog.Builder(context).apply {
@@ -23,18 +25,13 @@ fun showDialog(context: Context, title: String, message: String, positiveButton:
     }
 }
 
-fun Fragment.setResultListener(requestKey: String, action: (key: String, bundle: Bundle) -> Unit): Bundle {
-
-    return Bundle().also {
-        parentFragmentManager.setFragmentResultListener(requestKey, this,
-            FragmentResultListener { key, bundle ->
-                it.putBundle("DataSend", bundle)
-            })
-    }
-}
-
 const val ANIMATION_FAST_MILLIS = 50L
 const val ANIMATION_SLOW_MILLIS = 100L
 
 const val EXTRA_REPLY_NAME = "com.example.serviceexam.camera.REPLY.name"
 const val EXTRA_REPLY_URI_PHOT = "com.example.serviceexam.camera.REPLY.uri"
+
+
+interface ManagedCoroutineScope : CoroutineScope {
+    abstract fun launch(block: suspend CoroutineScope.() -> Unit) : Job
+}

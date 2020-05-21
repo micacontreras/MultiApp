@@ -2,16 +2,14 @@ package com.example.serviceexam.history.db
 
 import androidx.lifecycle.LiveData
 
-class HistoryRepository(private val photoDao: PhotoDao) {
+class HistoryRepository(private val historyDao: HistoryDao) {
 
-    val allPhotos: LiveData<List<Photo>> = photoDao.getAll()
-    //val userName: LiveData<String> = photoDao.getUserName(Photo().id)
-    //val datePhoto: LiveData<String> = photoDao.getPhotoDate()
+    val allPhotos: LiveData<List<History>> = historyDao.getAll()
 
-    suspend fun insert(photo: Photo) {
-        photoDao.insertPhoto(photo)
+    suspend fun insert(history: History) {
+        historyDao.insert(history)
     }
-    suspend fun delete(photo: Photo){
-        photoDao.deletePhoto(photo)
+    suspend fun delete(photoUri: String){
+        historyDao.delete(photoUri)
     }
 }

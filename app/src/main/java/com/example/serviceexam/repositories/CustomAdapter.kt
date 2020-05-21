@@ -11,10 +11,12 @@ import com.example.serviceexam.repositories.network.Properties
 import kotlinx.android.synthetic.main.text_row_item.view.*
 
 
-class CustomAdapter(var context: Context, private val dataSet: MutableList<Properties>) :
+class CustomAdapter(var context: Context) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     lateinit var onClick: (Properties) -> Unit
+    private var dataSet = emptyList<Properties>()
+
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(viewGroup.context).inflate(R.layout.text_row_item, viewGroup, false)
@@ -28,8 +30,8 @@ class CustomAdapter(var context: Context, private val dataSet: MutableList<Prope
 
     override fun getItemCount() =  dataSet.size
 
-    fun addItems(items: MutableList<Properties>) {
-        this.dataSet.addAll(items)
+    fun addItems(items: List<Properties>) {
+        this.dataSet = items
         notifyDataSetChanged()
     }
 

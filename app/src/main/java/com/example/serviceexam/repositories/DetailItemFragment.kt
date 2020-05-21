@@ -1,6 +1,5 @@
 package com.example.serviceexam.repositories
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import androidx.fragment.app.FragmentResultListener
 import com.bumptech.glide.Glide
 import com.example.serviceexam.R
 import com.example.serviceexam.repositories.network.Properties
-import com.example.serviceexam.setResultListener
 import kotlinx.android.synthetic.main.fragment_detail_item.*
 
 /**

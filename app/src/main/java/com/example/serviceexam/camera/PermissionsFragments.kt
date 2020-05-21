@@ -30,15 +30,8 @@ class PermissionsFragments : Fragment() {
         if (!hasPermissions(requireContext())) {
             requestPermissions(PERMISSIONS_REQUIRED, PERMISSIONS_REQUEST_CODE)
         } else {
-            findNavController().navigate(PermissionsFragmentsDirections.navigateToCamera())
+            findNavController().navigateUp()
         }
-    }
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_permissions, container, false)
     }
 
     override fun onRequestPermissionsResult(
@@ -48,7 +41,7 @@ class PermissionsFragments : Fragment() {
         if (requestCode == PERMISSIONS_REQUEST_CODE) {
             if (PackageManager.PERMISSION_GRANTED == grantResults.firstOrNull()) {
                 Toast.makeText(context, "Permission request granted", Toast.LENGTH_LONG).show()
-                findNavController().navigate(PermissionsFragmentsDirections.navigateToCamera()) } else {
+                findNavController().navigateUp() } else {
                 Toast.makeText(context, "Permission request denied", Toast.LENGTH_LONG).show()
             }
         }

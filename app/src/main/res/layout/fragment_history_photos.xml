@@ -22,7 +22,7 @@
         android:textSize="20sp"/>
 
     <ProgressBar
-        android:id="@+id/loadingPhoto"
+        android:id="@+id/loadingHistory"
         android:layout_width="100sp"
         android:layout_height="100sp"
         app:layout_constraintBottom_toBottomOf="parent"

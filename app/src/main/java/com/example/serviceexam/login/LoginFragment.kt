@@ -34,6 +34,8 @@ class LoginFragment : Fragment() {
 
     private var mGoogleSignInClient: GoogleSignInClient? = null
     private var myReCaptchaClient: SafetyNetClient? = null
+    private var account: GoogleSignInAccount? = null
+    private val executor = Executors.newSingleThreadExecutor()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,8 +61,17 @@ class LoginFragment : Fragment() {
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(activity)
 
-        if (account != null) {
-            checkCredentials()
+        if(checkSignOff()) signOff()
+        account = GoogleSignIn.getLastSignedInAccount(activity)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (account != null && !checkSignOff()) {
+            val userSaved = checkCredentials()
+            if(!userSaved.isNullOrEmpty()){
+                findNavController().navigate(LoginFragmentDirections.navigateToMain())
+            }
         }
     }
 
@@ -97,12 +108,9 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun checkCredentials() {
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        val userSaved = sharedPref.getString(getString(R.string.name), null)
-        if (!userSaved.isNullOrEmpty()) {
-            findNavController().navigate(LoginFragmentDirections.navigateToListRepositories())
-        }
+    fun checkCredentials(): String? {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        return  sharedPref?.getString(getString(R.string.name), null)
     }
 
     private fun saveUser(name: String?) {
@@ -136,6 +144,82 @@ class LoginFragment : Fragment() {
                     Log.d(TAG, "Error: ${e.message}")
                 }
                 showDialog(requireActivity(), "Error", e.message.toString(), "Ok")
+            }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun checkBiometrics() {
+        when (from(requireContext()).canAuthenticate()) {
+            BiometricManager.BIOMETRIC_SUCCESS -> apply {
+                Log.d("Sucess", "App can authenticate using biometrics.")
+                showBiometricPrompt()
+            }
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE ->
+                Log.e("Error", "No biometric features available on this device.")
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE ->
+                Log.e("Error", "Biometric features are currently unavailable.")
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED ->
+                Log.e(
+                    "Error", "The user hasn't associated any biometric credentials " +
+                            "with their account."
+                )
+        }
+    }
+
+    private fun showBiometricPrompt() {
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Biometric login")
+            .setSubtitle("Log in using your biometric credential")
+            .setNegativeButtonText("Cancel")
+            .build()
+
+        val biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationError(errorCode: Int,
+                                               errString: CharSequence) {
+                super.onAuthenticationError(errorCode, errString)
+                Log.d(TAG, "Authentication error.")
+                requireActivity().runOnUiThread { Toast.makeText(requireContext(), "Error. Try again!", Toast.LENGTH_LONG).show() }
+            }
+
+            override fun onAuthenticationSucceeded(
+                result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                findNavController().navigate(LoginFragmentDirections.navigateToMain())
+            }
+        })
+        biometricPrompt.authenticate(promptInfo)
+    }
+
+    fun checkSignOff(): Boolean {
+        var signOff = false
+        parentFragmentManager.setFragmentResultListener("IsSignOffSelect", this,
+            FragmentResultListener { _, bundle ->
+                bundle.getBoolean("SignOff").also {
+                    signOff = it
+                }
+            })
+        return signOff
+    }
+
+    private fun signOff() {
+        mGoogleSignInClient?.signOut()
+            ?.addOnCompleteListener {
+                showDialog(
+                    requireContext(),
+                    "Sign off",
+                    "To continue you need authenticate",
+                    "Ok",
+                    { revokeAccess() })
+            }
+    }
+
+    private fun revokeAccess() {
+        mGoogleSignInClient?.revokeAccess()
+            ?.addOnCompleteListener {
+                reCaptchaButton?.visibility = View.INVISIBLE
+                val preferences: SharedPreferences? =
+                    activity?.getPreferences(Context.MODE_PRIVATE)
+                preferences?.edit()?.remove(getString(R.string.name))?.apply()
             }
     }
 

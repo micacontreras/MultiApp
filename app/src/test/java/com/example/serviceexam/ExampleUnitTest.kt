@@ -107,6 +107,8 @@ class ListRepositoryTest {
             return Gson().fromJson(MOCK, collectionType)
         }
     }
+
+    @Test
     fun showRepository() {
         val response = MockCalls().getListRepositories()
         assert(response != null)
@@ -150,7 +152,7 @@ class DataBaseTest {
     }
 
     @Test
-    fun insertPhoto() {
+    fun insert() {
         val photo: History = TestUtil.insertPhoto(
             1,
             "image",

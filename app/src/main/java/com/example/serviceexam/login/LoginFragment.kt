@@ -4,12 +4,20 @@ package com.example.serviceexam.login
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.from
+import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import com.example.serviceexam.R
@@ -217,8 +225,7 @@ class LoginFragment : Fragment() {
         mGoogleSignInClient?.revokeAccess()
             ?.addOnCompleteListener {
                 reCaptchaButton?.visibility = View.INVISIBLE
-                val preferences: SharedPreferences? =
-                    activity?.getPreferences(Context.MODE_PRIVATE)
+                val preferences: SharedPreferences? = activity?.getPreferences(Context.MODE_PRIVATE)
                 preferences?.edit()?.remove(getString(R.string.name))?.apply()
             }
     }

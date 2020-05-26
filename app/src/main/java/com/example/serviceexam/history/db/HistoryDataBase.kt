@@ -9,9 +9,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 var id= 1
 
-@Database(entities = [Photo::class], version = 1, exportSchema = false)
+@Database(entities = [History::class], version = 1, exportSchema = false)
 abstract class HistoryDataBase : RoomDatabase() {
-    abstract fun photoDao(): PhotoDao
+    abstract fun historyDao(): HistoryDao
     /*private class HistoryDatabaseCallback(private val scope: CoroutineScope) : RoomDatabase.Callback() {
 
         override fun onOpen(db: SupportSQLiteDatabase) {

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.serviceexam.EXTRA_REPLY_NAME
 import com.example.serviceexam.EXTRA_REPLY_URI_PHOT
 import com.example.serviceexam.R
-import com.example.serviceexam.history.db.Photo
+import com.example.serviceexam.history.db.History
 import kotlinx.android.synthetic.main.fragment_history_photos.*
 
 /**
@@ -74,7 +74,7 @@ class HistoryPhotosFragment : Fragment() {
     private fun checkNewPhotos() {
         //showDialog(requireContext(), "Error", "Error addind photos", "Ok", {findNavController().navigateUp()})
         if(uriPhoto.isNotEmpty() && nameUserPhoto.isNotEmpty()){
-            val photo = Photo(idPhoto, uriPhoto, nameUserPhoto)
+            val photo = History(idPhoto, uriPhoto, nameUserPhoto)
             historyViewModel.insert(photo)
         }
     }

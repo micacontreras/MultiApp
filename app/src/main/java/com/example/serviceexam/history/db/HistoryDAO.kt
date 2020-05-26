@@ -7,14 +7,14 @@ import androidx.room.Insert
 import androidx.room.Query
 
 @Dao
-interface PhotoDao {
-    @Query("SELECT * FROM photo")
-    fun getAll(): LiveData<List<Photo>>
+interface HistoryDao {
+    @Query("SELECT * FROM history")
+    fun getAll(): LiveData<List<History>>
 
     @Insert
-    suspend fun insertPhoto(vararg photo: Photo)
+    suspend fun insert(vararg history: History)
 
     @Delete
-    suspend fun deletePhoto(photo: Photo)
+    suspend fun delete(history: History)
 
 }

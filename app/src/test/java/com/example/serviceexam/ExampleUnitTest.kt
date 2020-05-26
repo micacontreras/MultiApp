@@ -1,7 +1,5 @@
 package com.example.serviceexam
 
-import org.junit.Test
-import org.junit.Assert.*
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
@@ -24,7 +22,6 @@ import org.mockito.MockitoAnnotations
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import java.lang.reflect.Type
-
 
 class ListRepositoryTest {
 
@@ -152,7 +149,7 @@ class DataBaseTest {
     }
 
     @Test
-    fun insert() {
+    fun insertPhoto() {
         val photo: History = TestUtil.insertPhoto(
             1,
             "image",

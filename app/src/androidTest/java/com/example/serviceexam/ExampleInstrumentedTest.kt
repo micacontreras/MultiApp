@@ -5,19 +5,14 @@ import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
-import androidx.test.espresso.ViewAssertion
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.rule.ActivityTestRule
 import com.example.serviceexam.login.LoginFragment
 import com.example.serviceexam.login.LoginFragmentDirections
-import com.example.serviceexam.main.MainFragment
-import com.example.serviceexam.main.MainFragmentDirections
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.junit.Before
@@ -43,10 +38,11 @@ class LoginTest {
     var activityRule = ActivityTestRule(MainActivity::class.java, true, false)
 
     @Before
-    fun setup(){
+    fun setup() {
         activity = activityRule.launchActivity(null)!!
 
     }
+
     @Test
     fun testNavigationToMain() {
         val mockNavController = mock(NavController::class.java)
@@ -61,9 +57,9 @@ class LoginTest {
             }
         }
 
-        if(!userSaved.isNullOrEmpty()){
+        if (!userSaved.isNullOrEmpty()) {
             verify(mockNavController).navigate(LoginFragmentDirections.navigateToMain())
-        }else{
+        } else {
             onView(withId(R.id.radioGroup)).check(ViewAssertions.matches(isDisplayed()))
         }
     }
@@ -74,9 +70,11 @@ class LoginTest {
             override fun getConstraints(): Matcher<View> {
                 return allOf(isClickable(), isEnabled(), isDisplayed())
             }
+
             override fun getDescription(): String {
                 return "force click"
             }
+
             override fun perform(uiController: UiController, view: View) {
                 view.performClick() // perform click without checking view coordinates.
                 uiController.loopMainThreadUntilIdle()
@@ -86,17 +84,18 @@ class LoginTest {
 }
 
 @RunWith(AndroidJUnit4ClassRunner::class)
-class SignOffTest{
+class SignOffTest {
     private lateinit var activity: MainActivity
 
     @get:Rule
     var activityRule = ActivityTestRule(MainActivity::class.java, true, false)
 
     @Before
-    fun setup(){
+    fun setup() {
         activity = activityRule.launchActivity(null)!!
 
     }
+
     @Test
     fun testNavigationToMain() {
         val mockNavController = mock(NavController::class.java)
@@ -111,7 +110,7 @@ class SignOffTest{
             }
         }
 
-        if(signOff){
+        if (signOff) {
             verify(mockNavController).navigate(LoginFragmentDirections.navigateToMain())
         }
     }

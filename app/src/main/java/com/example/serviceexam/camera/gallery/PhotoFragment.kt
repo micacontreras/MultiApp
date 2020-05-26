@@ -1,4 +1,4 @@
-package com.example.serviceexam.camera
+package com.example.serviceexam.camera.gallery
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,7 +25,8 @@ class PhotoFragment internal constructor() : Fragment() {
     companion object {
         private const val FILE_NAME_KEY = "file_name"
 
-        fun create(image: File) = PhotoFragment().apply {
+        fun create(image: File) = PhotoFragment()
+            .apply {
             arguments = Bundle().apply {
                 putString(FILE_NAME_KEY, image.absolutePath)
             }

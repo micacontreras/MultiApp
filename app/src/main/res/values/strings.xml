@@ -33,6 +33,16 @@
     <string name="delete_dialog">Delete current photo?</string>
     <string name="delete_title">Confirm</string>
     <string name="photo">photo</string>
+    <string name="sign_off">Sign Off</string>
+    <string name="try_to_authenticate_with_google">Try to authenticate with Google</string>
+    <string name="or_authenticate_with_biometrics">Or authenticate with biometrics</string>
+    <string name="choose_your_authentication_method">Choose your authentication method</string>
+    <string name="are_you_human">Are you human?</string>
+    <string name="sign_in_with_biometric_authentication">Sign in with biometric authentication</string>
+    <string name="sign_in_with_google">  Sign in with Google</string>
+    <string name="todo">TODO</string>
+    <string name="choise_one">Choise one:</string>
+    <string name="choose_one">Choose one:</string>
 
 
 </resources>

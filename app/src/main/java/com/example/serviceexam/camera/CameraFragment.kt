@@ -28,6 +28,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.serviceexam.*
 import com.example.serviceexam.R
+import com.example.serviceexam.camera.gallery.EXTENSION_WHITELIST
+import kotlinx.android.synthetic.main.camera_ui_container.view.*
+import kotlinx.android.synthetic.main.fragment_camera.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
@@ -61,9 +64,8 @@ class CameraFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_camera, container, false)
-    }
+    ): View? = inflater.inflate(R.layout.fragment_camera, container, false)
+
 
     override fun onResume() {
         super.onResume()
@@ -75,7 +77,7 @@ class CameraFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         container = view as ConstraintLayout
-        viewFinder = container.findViewById(R.id.view_finder)
+        viewFinder = container.view_finder
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
@@ -131,7 +133,7 @@ class CameraFragment : Fragment() {
     }
 
     private fun setGalleryThumbnail(uri: Uri) {
-        val thumbnail = container.findViewById<ImageButton>(R.id.photo_view_button)
+        val thumbnail = container.photo_view_button
         thumbnail.post {
             thumbnail.setPadding(resources.getDimension(R.dimen.stroke_small).toInt())
             Glide.with(thumbnail)
@@ -142,7 +144,7 @@ class CameraFragment : Fragment() {
     }
 
     private fun updateCameraUi() {
-        container.findViewById<ConstraintLayout>(R.id.camera_ui_container)?.let {
+        container.camera_ui_container.let {
             container.removeView(it)
         }
         val controls = View.inflate(requireContext(), R.layout.camera_ui_container, container)
@@ -155,7 +157,7 @@ class CameraFragment : Fragment() {
             }
         }
         // Listener for button used to capture photo
-        controls.findViewById<ImageButton>(R.id.camera_capture_button).setOnClickListener {
+        controls.camera_capture_button.setOnClickListener {
             // Get a stable reference of the modifiable image capture use case
             imageCapture?.let { imageCapture ->
                 val photoFile = createFile(outputDirectory, FILENAME, PHOTO_EXTENSION)
@@ -183,7 +185,7 @@ class CameraFragment : Fragment() {
                                 putString(EXTRA_REPLY_URI_PHOT, photoFile.absolutePath)
                                 putString(EXTRA_REPLY_NAME, checkUser())
                             }.also {
-                                setFragmentResult("Result", it)
+                                setFragmentResult("ResultToAdd", it)
                             }
 
                             // We can only change the foreground Drawable using API level 23+ API
@@ -225,7 +227,7 @@ class CameraFragment : Fragment() {
         }
 
         // Listener for button used to view the most recent photo
-        controls.findViewById<ImageButton>(R.id.photo_view_button).setOnClickListener {
+        controls.photo_view_button.setOnClickListener {
             if (true == outputDirectory.listFiles()?.isNotEmpty()) {
                 val action= CameraFragmentDirections.navigateToGallery(outputDirectory.absolutePath)
                 findNavController().navigate(action)

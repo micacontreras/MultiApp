@@ -14,7 +14,7 @@ interface HistoryDao {
     @Insert
     suspend fun insert(vararg history: History)
 
-    @Delete
-    suspend fun delete(history: History)
+    @Query("DELETE FROM history WHERE photoUri = :photoUri")
+    suspend fun delete(photoUri: String)
 
 }

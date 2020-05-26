@@ -11,6 +11,8 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentResultListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 
 fun showDialog(context: Context, title: String, message: String, positiveButton: String,  positiveAction: (() -> Unit)? = null, negativeButton:String?= null ){
     AlertDialog.Builder(context).apply {
@@ -20,16 +22,6 @@ fun showDialog(context: Context, title: String, message: String, positiveButton:
         setNegativeButton(negativeButton){_, _ -> }
         create()
         show()
-    }
-}
-
-fun Fragment.setResultListener(requestKey: String, action: (key: String, bundle: Bundle) -> Unit): Bundle {
-
-    return Bundle().also {
-        parentFragmentManager.setFragmentResultListener(requestKey, this,
-            FragmentResultListener { key, bundle ->
-                it.putBundle("DataSend", bundle)
-            })
     }
 }
 

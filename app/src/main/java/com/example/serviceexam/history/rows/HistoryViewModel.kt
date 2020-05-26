@@ -1,4 +1,4 @@
-package com.example.serviceexam.history.photos
+package com.example.serviceexam.history.rows
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -14,18 +14,18 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
 
     private val repository: HistoryRepository
 
-    val allPhoto: LiveData<List<History>>
+    val allItems: LiveData<List<History>>
 
     init {
-        val photoDao = HistoryDataBase.getDatabase(application).historyDao()
-        repository = HistoryRepository(photoDao)
-        allPhoto = repository.allPhotos
+        val historyDao = HistoryDataBase.getDatabase(application).historyDao()
+        repository = HistoryRepository(historyDao)
+        allItems = repository.allPhotos
     }
 
     fun insert(history: History) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(history)
     }
-    fun delete(history: History)= viewModelScope.launch(Dispatchers.IO) {
-        repository.delete(history)
+    fun delete(photoUri: String)= viewModelScope.launch(Dispatchers.IO) {
+        repository.delete(photoUri)
     }
 }

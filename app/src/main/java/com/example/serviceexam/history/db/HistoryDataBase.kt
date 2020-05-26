@@ -7,7 +7,6 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-var id= 1
 
 @Database(entities = [History::class], version = 1, exportSchema = false)
 abstract class HistoryDataBase : RoomDatabase() {

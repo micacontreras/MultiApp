@@ -49,10 +49,8 @@ class MainFragment : Fragment() {
         btnList.setOnClickListener{findNavController().navigate(MainFragmentDirections.navigateToListRepositories())}
         btnTakePhoto.setOnClickListener { findNavController().navigate(MainFragmentDirections.navigateToCamera()) }
         btnHistory.setOnClickListener{findNavController().navigate(MainFragmentDirections.navigateToHistory())}
-        signOffButton.setOnClickListener { Bundle().apply {
-            putBoolean("SignOff", true)
-        }.also {
-            setFragmentResult("IsSignOffSelect", it)
-            findNavController().navigateUp() } }
+        signOffButton.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.navigateToLogin(true, 1))
+        }
     }
 }

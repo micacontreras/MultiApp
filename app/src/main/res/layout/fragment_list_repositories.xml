@@ -50,7 +50,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
+            android:clickable="true"
             app:layout_constraintStart_toStartOf="parent"
-            tools:listitem="@layout/text_row_item" />
+            tools:listitem="@layout/text_row_item"
+            android:focusable="true" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

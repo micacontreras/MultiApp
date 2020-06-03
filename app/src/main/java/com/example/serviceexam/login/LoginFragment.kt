@@ -17,8 +17,10 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.from
 import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentResultListener
+import androidx.navigation.NavArgument
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.serviceexam.R
 import com.example.serviceexam.showDialog
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -44,7 +46,7 @@ class LoginFragment : Fragment() {
     private var myReCaptchaClient: SafetyNetClient? = null
     private var account: GoogleSignInAccount? = null
     private val executor = Executors.newSingleThreadExecutor()
-    private var signOff: Boolean = false
+    private val args: LoginFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,8 +65,10 @@ class LoginFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mainButton.isEnabled = false
         reCaptchaButton.setOnClickListener { validateCaptcha() }
         setupAuthenticationOption()
+        mainButton.setOnClickListener { findNavController().navigate(LoginFragmentDirections.navigateToMain()) }
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -158,7 +162,7 @@ class LoginFragment : Fragment() {
                 if (!userResponseToken.isNullOrEmpty()) {
                     // Validate the user response token using the reCAPTCHA siteverify API.
                     //No aplicable la verificacion con backend
-                    findNavController().navigate(LoginFragmentDirections.navigateToMain())
+                    mainButton.isEnabled = true
                 }
             }
             .addOnFailureListener(requireActivity()) { e ->
@@ -223,18 +227,21 @@ class LoginFragment : Fragment() {
                     result: BiometricPrompt.AuthenticationResult
                 ) {
                     super.onAuthenticationSucceeded(result)
-                    findNavController().navigate(LoginFragmentDirections.navigateToMain())
+                    requireActivity().runOnUiThread{ mainButton.isEnabled = true }
                 }
             })
         biometricPrompt.authenticate(promptInfo)
     }
 
     fun checkSignOff(): Boolean {
-        parentFragmentManager.setFragmentResultListener("IsSignOffSelect", this,
-            FragmentResultListener { _, bundle ->
-                signOff = bundle.getBoolean("SignOff")
-            })
-        return signOff
+        return if(args.fragmentId == 1){
+            val value = args.signOff
+            //findNavController().currentDestination?.arguments?.set("signOff", )
+            //get("signOff")?.defaultValue
+            value
+        } else{
+            false
+        }
     }
 
     private fun signOff() {

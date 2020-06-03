@@ -13,6 +13,14 @@
         <action
             android:id="@+id/navigateToMain"
             app:destination="@id/mainFragment" />
+        <argument
+            android:name="signOff"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="fragmentId"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/listRepositoriesFragment"
@@ -27,7 +35,11 @@
         android:id="@+id/detailItemFragment"
         android:name="com.example.serviceexam.repositories.DetailItemFragment"
         android:label="fragment_detail_item"
-        tools:layout="@layout/fragment_detail_item" />
+        tools:layout="@layout/fragment_detail_item" >
+        <argument
+            android:name="repository"
+            app:argType="com.example.serviceexam.repositories.network.Properties" />
+    </fragment>
     <fragment
         android:id="@+id/permissionsFragments"
         android:name="com.example.serviceexam.camera.PermissionsFragments"
@@ -73,5 +85,8 @@
         <action
             android:id="@+id/navigateToCamera"
             app:destination="@id/cameraFragment" />
+        <action
+            android:id="@+id/navigateToLogin"
+            app:destination="@id/loginFragment" />
     </fragment>
 </navigation>

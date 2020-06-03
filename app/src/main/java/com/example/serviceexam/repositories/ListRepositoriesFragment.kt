@@ -23,8 +23,7 @@ import kotlinx.android.synthetic.main.fragment_list_repositories.*
 class ListRepositoriesFragment : Fragment() {
 
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var adapter: CustomAdapter
-    private val list: MutableList<Properties> = ArrayList()
+    lateinit var adapter: CustomAdapter
     private var recyclerView: RecyclerView? = null
 
     private lateinit var listRepositoriesViewModel: ListRepositoriesViewModel
@@ -61,10 +60,7 @@ class ListRepositoriesFragment : Fragment() {
 
     private fun registerListeners() {
         adapter.onClick = {
-            Bundle().apply { putParcelable("DataUser", it) }.also {
-                setFragmentResult("Data", it)
-            }
-            findNavController().navigate(ListRepositoriesFragmentDirections.navigateToDetailItem())
+            findNavController().navigate(ListRepositoriesFragmentDirections.navigateToDetailItem(it))
         }
     }
 

@@ -11,6 +11,9 @@
     <!-- Clave de servidor para reCaptcha -->
     <string name="my_site_key">6Le7aOsUAAAAAPkIFIhtR6hUZSBxBvbTsHbs1UmJ</string>
 
+    <!-- Clave para Maps -->
+    <string name="google_maps_api_key">AIzaSyBz5uqpzYl3fiu3baXp_2GbJQFkALfKRRY</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="list_public_repositories">List public repositories</string>
@@ -43,6 +46,7 @@
     <string name="todo">TODO</string>
     <string name="choise_one">Choise one:</string>
     <string name="choose_one">Choose one:</string>
+    <string name="go_to_maps">Go to Maps</string>
 
 
 </resources>

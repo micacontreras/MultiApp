@@ -11,13 +11,13 @@
 
     <Button
         android:id="@+id/btnTakePhoto"
-        style="@android:style/Widget.Material.Light.Button.Toggle"
+        style="@android:style/Widget.Holo.Button"
         android:layout_width="220sp"
         android:layout_height="50sp"
         android:layout_marginTop="64dp"
         android:drawableStart="@android:drawable/ic_menu_camera"
         android:text="Take Photo"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/icActive"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -26,30 +26,30 @@
 
     <Button
         android:id="@+id/btnHistory"
-        style="@android:style/Widget.Material.Light.Button.Toggle"
+        style="@android:style/Widget.Holo.Button"
         android:layout_width="220sp"
         android:layout_height="50sp"
         android:drawableStart="@android:drawable/ic_menu_recent_history"
         android:text="History Photos"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/icActive"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnTakePhoto"
-        app:layout_constraintVertical_bias="0.259" />
+        app:layout_constraintVertical_bias="0.147" />
 
     <Button
         android:id="@+id/btnList"
-        style="@android:style/Widget.Material.Button.Toggle"
+        style="@android:style/Widget.Holo.Button"
         android:layout_width="220sp"
         android:layout_height="50sp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="76dp"
         android:layout_marginEnd="24dp"
         android:text="@string/list_public_repositories"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/icActive"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -70,6 +70,22 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/maps"
+        style="@android:style/Widget.Holo.Button"
+        android:layout_width="220sp"
+        android:layout_height="50sp"
+        android:drawableStart="@android:drawable/ic_dialog_map"
+        android:text="@string/go_to_maps"
+        android:textColor="@color/icActive"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/signOffButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnHistory"
+        app:layout_constraintVertical_bias="0.296" />
 
     <Button
         android:id="@+id/signOffButton"

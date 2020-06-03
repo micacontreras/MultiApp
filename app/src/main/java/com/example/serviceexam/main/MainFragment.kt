@@ -52,5 +52,6 @@ class MainFragment : Fragment() {
         signOffButton.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.navigateToLogin(true, 1))
         }
+        maps.setOnClickListener { findNavController().navigate(MainFragmentDirections.navigateToMaps()) }
     }
 }

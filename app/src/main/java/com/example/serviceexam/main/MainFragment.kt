@@ -1,18 +1,16 @@
 package com.example.serviceexam.main
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import com.example.serviceexam.R
+import com.example.serviceexam.maps.MapsActivity
 import com.example.serviceexam.showDialog
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import kotlinx.android.synthetic.main.fragment_main.*
 
 
@@ -46,12 +44,19 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btnList.setOnClickListener{findNavController().navigate(MainFragmentDirections.navigateToListRepositories())}
+        btnList.setOnClickListener { findNavController().navigate(MainFragmentDirections.navigateToListRepositories()) }
         btnTakePhoto.setOnClickListener { findNavController().navigate(MainFragmentDirections.navigateToCamera()) }
-        btnHistory.setOnClickListener{findNavController().navigate(MainFragmentDirections.navigateToHistory())}
+        btnHistory.setOnClickListener { findNavController().navigate(MainFragmentDirections.navigateToHistory()) }
         signOffButton.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.navigateToLogin(true, 1))
         }
-        maps.setOnClickListener { findNavController().navigate(MainFragmentDirections.navigateToMaps()) }
+        maps.setOnClickListener {
+            startActivity(
+                Intent(
+                    requireContext(),
+                    MapsActivity::class.java
+                )
+            )
+        }
     }
 }

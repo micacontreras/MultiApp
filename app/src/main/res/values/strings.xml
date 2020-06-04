@@ -47,6 +47,7 @@
     <string name="choise_one">Choise one:</string>
     <string name="choose_one">Choose one:</string>
     <string name="go_to_maps">Go to Maps</string>
+    <string name="enable_tracking">Enable Tracking?</string>
 
 
 </resources>

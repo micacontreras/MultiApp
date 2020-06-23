@@ -4,6 +4,11 @@
     <string name="logo">Logo</string>
     <string name="name">Name</string>
     <string name="userData">UserData</string>
+    <string name="notification_text">Tracking, tap to cancel</string>
+    <string name="transport_id" translatable="false">1</string>
+    <string name="firebase_path" translatable="false">locations</string>
+    <string name="firebase_email" translatable="false">micaela.contreras124@gmail.com</string>
+    <string name="firebase_password" translatable="false">contraseña1</string>
 
     <!-- Clave de servidor para autenticacion -->
     <string name="server_key_sign_in">464573287033-idg96drbfqpqdkm9pnfhd7ltl725s6qp.apps.googleusercontent.com</string>

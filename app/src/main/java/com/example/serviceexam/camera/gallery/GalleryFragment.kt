@@ -70,7 +70,7 @@ class GalleryFragment internal constructor() : Fragment() {
             view.share_button.isEnabled = false
         }
         val mediaViewPager = view.photo_view_pager.apply {
-            offscreenPageLimit = 2
+            //offscreenPageLimit = 2
             adapter = MediaPagerAdapter(childFragmentManager)
         }
 

@@ -36,8 +36,8 @@ class DetailItemFragment : Fragment() {
 
     private fun modifyScreen(data: Properties?) {
         Toast.makeText(requireContext(), data?.owner?.login, Toast.LENGTH_LONG ).show()
-        nameOwner?.text = data?.owner?.login
-        description?.text = data?.description
+        nameOwner?.setText(data?.owner?.login)
+        description?.setText(data?.description)
         /*Glide.with(requireActivity())
             .load(data?.owner?.imgSrcUrl)
             .into(imageAvatar)*/

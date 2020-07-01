@@ -319,7 +319,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == EDIT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            data?.data?.normalizeScheme()?.let { alterDocument(it) }
+            //data?.data?.normalizeScheme()?.let { alterDocument(it) }
         }
     }
 

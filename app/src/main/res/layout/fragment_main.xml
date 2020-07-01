@@ -2,36 +2,41 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainFragmentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EDDEDE"
-    android:backgroundTint="#E1D6B6"
-    tools:context=".main.MainFragment"
-    android:id="@+id/mainFragmentLayout">
+    android:background="#B4C0F3"
+    tools:context=".main.MainFragment">
 
-    <Button
+    <TextView
         android:id="@+id/btnTakePhoto"
         style="@android:style/Widget.Holo.Button"
         android:layout_width="220sp"
         android:layout_height="50sp"
         android:layout_marginTop="64dp"
+        android:background="#00FFFFFF"
+        android:clickable="true"
         android:drawableStart="@android:drawable/ic_menu_camera"
+        android:focusable="true"
         android:text="Take Photo"
-        android:textColor="@color/icActive"
+        android:textColor="@color/colorAccent"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnList" />
 
-    <Button
+    <TextView
         android:id="@+id/btnHistory"
         style="@android:style/Widget.Holo.Button"
         android:layout_width="220sp"
         android:layout_height="50sp"
+        android:background="#00FFFFFF"
+        android:clickable="true"
         android:drawableStart="@android:drawable/ic_menu_recent_history"
+        android:focusable="true"
         android:text="History Photos"
-        android:textColor="@color/icActive"
+        android:textColor="@color/colorAccent"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnTakePhoto"
         app:layout_constraintVertical_bias="0.147" />
 
-    <Button
+    <TextView
         android:id="@+id/btnList"
         style="@android:style/Widget.Holo.Button"
         android:layout_width="220sp"
@@ -48,8 +53,11 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="76dp"
         android:layout_marginEnd="24dp"
+        android:background="#00FFFFFF"
+        android:clickable="true"
+        android:focusable="true"
         android:text="@string/list_public_repositories"
-        android:textColor="@color/icActive"
+        android:textColor="@color/colorAccent"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -71,14 +79,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <TextView
         android:id="@+id/maps"
         style="@android:style/Widget.Holo.Button"
         android:layout_width="220sp"
         android:layout_height="50sp"
+        android:background="#00FFFFFF"
+        android:clickable="true"
         android:drawableStart="@android:drawable/ic_dialog_map"
+        android:focusable="true"
         android:text="@string/go_to_maps"
-        android:textColor="@color/icActive"
+        android:textColor="@color/colorAccent"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/signOffButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,8 +103,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:background="#00FFFFFF"
         android:drawableStart="@drawable/googleg_standard_color_18"
         android:text="@string/sign_off"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"

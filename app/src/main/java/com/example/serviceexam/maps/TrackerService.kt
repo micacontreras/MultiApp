@@ -112,15 +112,7 @@ open class TrackerService : Service() {
         )
 
         if (permission == PackageManager.PERMISSION_GRANTED) {
-            client?.requestLocationUpdates(request, object : LocationCallback() {
-                override fun onLocationResult(locationResult: LocationResult) {
-                    location = locationResult.lastLocation
-                    if (location != null) {
-                        listLocations.add("Latitude: ${location?.latitude.toString()} / Longitude: ${location?.longitude.toString()}")
-                        Log.d("Database", "${location?.longitude} and ${location?.latitude} ")
-                    }
-                }
-            }, null)
+            client?.requestLocationUpdates(request,locationCallback, null)
         }
     }
 
@@ -128,6 +120,11 @@ open class TrackerService : Service() {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 Toast.makeText(applicationContext, "Tracking enable", Toast.LENGTH_LONG).show()
+                location = locationResult.lastLocation
+                if (location != null) {
+                    listLocations.add("Latitude: ${location?.latitude.toString()} / Longitude: ${location?.longitude.toString()}")
+                    Log.d("Database", "${location?.longitude} and ${location?.latitude} ")
+                }
             }
         }
     }

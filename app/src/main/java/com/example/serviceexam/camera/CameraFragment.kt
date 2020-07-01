@@ -67,15 +67,16 @@ class CameraFragment : Fragment() {
     ): View? = inflater.inflate(R.layout.fragment_camera, container, false)
 
 
-    override fun onResume() {
-        super.onResume()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         if (!PermissionsFragments.hasPermissions(requireContext())) {
-            findNavController().navigateUp()
+            findNavController().navigate(CameraFragmentDirections.navigateToPermissions())
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         container = view as ConstraintLayout
         viewFinder = container.view_finder
 
@@ -147,7 +148,7 @@ class CameraFragment : Fragment() {
         container.camera_ui_container.let {
             container.removeView(it)
         }
-        val controls = View.inflate(requireContext(), R.layout.camera_ui_container, container)
+        val controls = View.inflate(requireActivity(), R.layout.camera_ui_container, container)
 
         lifecycleScope.launch(Dispatchers.IO) {
             outputDirectory.listFiles { file ->

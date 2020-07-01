@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="#E49D9D"
     tools:context=".splash.SplashActivity">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="294dp"
         android:layout_height="432dp"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,6 +24,7 @@
         android:id="@+id/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:text="@string/loading"
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,6 +39,7 @@
         style="@android:style/Widget.Holo.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/loading"
         app:layout_constraintHorizontal_bias="0.797"

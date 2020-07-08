@@ -158,9 +158,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setupMap()
 
         mLocationRequest = LocationRequest()
-        mLocationRequest.interval = 120000
-        mLocationRequest.fastestInterval = 120000
-        mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+        mLocationRequest.interval = 20000
+        mLocationRequest.fastestInterval = 5000
+        mLocationRequest.maxWaitTime = 30000
+        mLocationRequest.priority = LocationRequest.PRIORITY_LOW_POWER
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(

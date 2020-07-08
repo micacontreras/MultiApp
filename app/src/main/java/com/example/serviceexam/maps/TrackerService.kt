@@ -101,9 +101,10 @@ open class TrackerService : Service() {
 
     private fun requestLocationUpdates() {
         val request = LocationRequest()
-        request.interval = 10000
+        request.interval = 20000
         request.fastestInterval = 5000
-        request.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        request.priority = LocationRequest.PRIORITY_LOW_POWER
+        request.maxWaitTime = 30000
         client = LocationServices.getFusedLocationProviderClient(this)
 
         val permission = ContextCompat.checkSelfPermission(

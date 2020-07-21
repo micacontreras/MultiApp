@@ -162,7 +162,7 @@ class DataBaseTest {
             list.value?.forEach {
                 print(it.id)
             }
-            Assert.assertTrue(list.value?.size != 0)
+            Assert.assertTrue(list.value?.size == 1)
         }
     }
 }

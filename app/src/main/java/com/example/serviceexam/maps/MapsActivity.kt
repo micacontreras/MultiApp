@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.work.*
+import androidx.work.PeriodicWorkRequest.Builder
 import com.example.serviceexam.R
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -53,6 +54,7 @@ import kotlin.collections.HashMap
  * A simple [Fragment] subclass.
  */
 private const val PERMISSIONS_REQUEST_CODE = 10
+@RequiresApi(Build.VERSION_CODES.P)
 private val PERMISSIONS_REQUIRED = arrayOf(
     Manifest.permission.WRITE_EXTERNAL_STORAGE,
     Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -351,7 +353,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .build()
 
         val periodicSyncDataWork =
-            PeriodicWorkRequest.Builder(Worker::class.java, 2, TimeUnit.HOURS)
+            Builder(Worker::class.java, 2, TimeUnit.HOURS)
                 .addTag(TAG)
                 //Calcular horas para las 9 am
                 .setInitialDelay(delay, TimeUnit.MINUTES)
